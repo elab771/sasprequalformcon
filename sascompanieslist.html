@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Companies List - Data Source (Do Not Delete)</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .instructions {
+        background: #fff3cd;
+        border: 1px solid #ffe08a;
+        padding: 12px 16px;
+        margin-bottom: 20px;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+    table { border-collapse: collapse; font-size: 13px; }
+    th, td { border: 1px solid #999; padding: 6px 10px; text-align: left; }
+    th { background: #f0f0f0; }
+</style>
+</head>
+<body>
+
+<div class="instructions">
+    <strong>This page is a data source for the Engineers Qualification Tracker's Company Name dropdown.</strong><br>
+    It is not linked from the main form and does not need to be shared with anyone &mdash; it just needs to
+    stay hosted in the <u>same folder</u> as the main form file, under the exact filename
+    <code>companieslist.html</code>.<br><br>
+    <strong>To add, edit, or remove a company:</strong> add, edit, or delete a <code>&lt;tr&gt;&hellip;&lt;/tr&gt;</code>
+    row inside the <code>&lt;tbody&gt;</code> below, keeping the same three columns in the same order
+    (Company Name, Company ID, Voltage Level). Do not change the table's <code>id="companiesTable"</code>
+    or the column order &mdash; the main form reads this table directly.
+</div>
+
+<table id="companiesTable">
+  <thead>
+    <tr><th>Company Name</th><th>Company ID</th><th>Voltage Level</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>ALFANAR/SPRECHER - SAS</td><td>SAS_FAN</td><td>SAS Only</td></tr>
+    <tr><td>GE-ALSTOM - SAS</td><td>SAS_GEA</td><td>SAS Only</td></tr>
+    <tr><td>Hitachi Energy Co. LTD - SAS</td><td>SAS_HEC</td><td>SAS Only</td></tr>
+    <tr><td>Schneider Electric - SAS</td><td>SAS_SCH</td><td>SAS Only</td></tr>
+    <tr><td>Schweitzer Engineering Laboratories Saudi Ltd. SEL - SAS</td><td>SAS_SEL</td><td>SAS Only</td></tr>
+    <tr><td>SIEMENS LTD. - SAS</td><td>SAS_SIE</td><td>SAS Only</td></tr>
+    <tr><td>System House Factory for Electric Panels Co. (SEP) - SAS</td><td>SAS_SEP</td><td>SAS Only</td></tr>
+    <tr><td>System House Factory for Electric Panels Co. (SEP) - SAS MODIFICATION</td><td>SAS_MOD-SEP</td><td>SAS Only</td></tr>
+    <tr><td>Xeon Automation - SAS MODIFICATION</td><td>SAS_MOD-XEO</td><td>SAS Only</td></tr>
+
+    
+  </tbody>
+</table>
+
+</body>
+</html>
