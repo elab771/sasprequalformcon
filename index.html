@@ -861,12 +861,6 @@
             }
         }
 
-        if (select.name === 'q_sas_team_leader[]' && select.value === 'YES') {
-            if (totalYrs < 7 || ksaYrs < 2) {
-                alert("Validation Error:\n'SAS Team Leader' can only be marked as YES if Total Experience is 7 years or greater AND Experience in KSA is 2 years or greater.");
-                return false;
-            }
-        }
         return true;
     }
 
@@ -1170,12 +1164,6 @@
             const liveSub = record.querySelector('[name="q_live_substation[]"]').value;
             if (liveSub === 'YES' && ksaYrs < 1) {
                 alert(`Engineer Record #${recordNum}:\n'Live Substation' is marked YES, but Experience in KSA is less than 1 year.`);
-                return false;
-            }
-
-            const teamLeader = record.querySelector('[name="q_sas_team_leader[]"]').value;
-            if (teamLeader === 'YES' && (totalYrs < 7 || ksaYrs < 2)) {
-                alert(`Engineer Record #${recordNum}:\n'SAS Team Leader' is marked YES, but requires Total Experience >= 7 years and Experience in KSA >= 2 years.`);
                 return false;
             }
 
