@@ -852,8 +852,7 @@
         if (!record) return true;
 
         const ksaYrs = parseInt(record.querySelector('[name="profile_ksa_exp_yrs[]"]').value) || 0;
-        const totalYrs = parseInt(record.querySelector('[name="profile_total_exp_yrs[]"]').value) || 0;
-
+        
         if (select.name === 'q_live_substation[]' && select.value === 'YES') {
             if (ksaYrs < 1) {
                 alert("Validation Error:\n'Live Substation' can only be marked as YES if Experience in KSA is 1 year or greater.");
@@ -869,7 +868,6 @@
         dropdowns.forEach(select => {
             applySelectColor(select);
             select.addEventListener('change', function() {
-                // Instantly revert to NO if validation fails during selection
                 if (!validateDropdownRules(this)) {
                     this.value = 'NO';
                 }
@@ -1040,8 +1038,8 @@
         };
 
         const normalizeValue = (value) => (value ?? '').toString().trim();
-        const conditionalContextValue = (value) => normalizeValue(value).toUpperCase() === 'NO' ? normalizeValue(value) : '';
 
+        // 1. Fill Primary / T&C Contractor details (Standard Fields)
         const primaryFieldMap = {
             txtengrname: data.name,
             txtnationality: data.nationality,
@@ -1053,13 +1051,14 @@
             txtexpksamo: data.ksa_mos,
             txtmobileno: data.contact
         };
-
         Object.entries(primaryFieldMap).forEach(([fieldName, value]) => {
             safeSetText(fieldName, value);
         });
 
+        // 2. Fill T&C Contractor qualification fields with EXACT value (YES or NO)
         data.matrix.forEach(item => safeSetText(item.pdfField, item.value));
 
+        // 3. Fill CSD Approval context details (Standard Fields)
         const contextFieldMap = {
             ctxtengrname: data.name,
             ctxtnationality: data.nationality,
@@ -1071,13 +1070,17 @@
             ctxtexpksamo: data.ksa_mos,
             ctxtmobileno: data.contact 
         };
-
-        data.matrix.forEach(item => contextFieldMap[`c${item.pdfField}`] = item.value);
-
         Object.entries(contextFieldMap).forEach(([fieldName, value]) => {
-            safeSetText(fieldName, conditionalContextValue(value));
+            safeSetText(fieldName, value);
         });
 
+        // 4. Fill CSD Approval qualification fields (Filtered: Blank if YES, 'NO' if NO)
+        data.matrix.forEach(item => {
+            const filteredValue = (item.value === 'NO') ? 'NO' : '';
+            safeSetText(`c${item.pdfField}`, filteredValue);
+        });
+
+        // 5. Lock fields if they are populated, keep blank CSD (ctxt) fields editable
         form.getFields().forEach(field => {
             const fieldName = field.getName();
             const isContextField = fieldName.startsWith('ctxt');
@@ -1232,9 +1235,9 @@
                     location: record.querySelector('[name="profile_location[]"]').value,
                     remarks: record.querySelector('[name="profile_remarks[]"]').value,
                     matrix: [
-                        { pdfField: "txtsas", value: record.querySelector('[name="q_sas_activities[]"]').value === 'NO' ? 'NO' : '' },
-                        { pdfField: "txtlivess", value: record.querySelector('[name="q_live_substation[]"]').value === 'NO' ? 'NO' : '' },
-                        { pdfField: "txtsastl", value: record.querySelector('[name="q_sas_team_leader[]"]').value === 'NO' ? 'NO' : '' }
+                        { pdfField: "txtsas", value: record.querySelector('[name="q_sas_activities[]"]').value },
+                        { pdfField: "txtlivess", value: record.querySelector('[name="q_live_substation[]"]').value },
+                        { pdfField: "txtsastl", value: record.querySelector('[name="q_sas_team_leader[]"]').value }
                     ]
                 };
 
